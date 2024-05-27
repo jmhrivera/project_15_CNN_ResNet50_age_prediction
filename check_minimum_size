@@ -1,0 +1,29 @@
+from PIL import Image
+import os
+# Directorio donde se encuentran las imágenes
+directory = 'D:/Tripleten/Datasets/faces/final_files/'
+
+min_size = None
+max_size = None
+
+for filename in os.listdir(directory):
+    if filename.endswith(
+        ('png', 'jpg', 'jpeg', 'bmp', 'gif')
+        ):
+            filepath = os.path.join(directory,filename)
+
+            try:
+                with Image.open(filepath) as img:
+                    size = img.size
+                if min_size is None or size< min_size:
+                    min_size = size
+                    min_image = filename
+
+            except Exception as e:
+                print(f'No se pudo abrir {filename}: {e}')
+
+if min_image is not None:
+    print(f'La imagen más pequeña es {min_image} con dimensiones {min_size}')
+else:
+    print('No se encontraron imágenes en el directorio especificado.')
+
